@@ -1,7 +1,7 @@
 # 车牌识别项目 · 进度记录
 
 > 本文档由 AI 助手同步维护，记录项目进度、操作步骤与问题排查。
-> 最后更新：2026-08-26
+> 最后更新：2026-08-27
 
 ---
 
@@ -11,7 +11,7 @@
 - **参考项目**：[detect_ccpd](https://gitee.com/jacklee85/detect_ccpd)（YOLO 车牌检测）
 - **OCR 方案**：[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
 - **数据集**：CCPD2020（绿牌/新能源车，约 1.2 万张）
-- **代码仓库**：`D:\Github\licence-plate-recognition`
+- **代码仓库**：[github.com/Lpiney/licence-plate-recognition](https://github.com/Lpiney/licence-plate-recognition)（SSH 方式）
 
 ---
 
