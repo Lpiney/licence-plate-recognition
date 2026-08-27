@@ -7,21 +7,34 @@
       1. Kills all residual python processes left by failed/interrupted runs
       2. Shows GPU memory usage before training
       3. Starts train.py via conda run (no manual env activation needed)
+
+    All paths are derived automatically (no hardcoded user paths), so this
+    script works on any machine without modification.
 .USAGE
-    powershell -ExecutionPolicy Bypass -File D:\Github\licence-plate-recognition\start_train.ps1
+    powershell -ExecutionPolicy Bypass -File <项目根目录>\start_train.ps1
 .NOTES
     Keep the console window open while training runs.
     Press Ctrl+C to interrupt (residuals will be auto-cleaned next run).
 #>
 
 $ErrorActionPreference = "Continue"
-$ProjectDir = "D:\Github\licence-plate-recognition"
-$CondaBat = "C:\Users\Bruce\miniconda3\Library\bin\conda.BAT"
+
+# Auto-detect project dir from this script's location (no hardcoded path)
+$ProjectDir = $PSScriptRoot
+
+# Locate conda in the current user's home (no hardcoded username)
+$CondaBat = Join-Path $env:USERPROFILE "miniconda3\Library\bin\conda.BAT"
+if (-not (Test-Path $CondaBat)) {
+    # fallback: try conda on PATH
+    $CondaBat = "conda.BAT"
+}
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  License Plate Training Launcher" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "  Project: $ProjectDir" -ForegroundColor DarkGray
+Write-Host "  Conda:   $CondaBat" -ForegroundColor DarkGray
 
 # ---- Step 1: clean residual python processes ----
 Write-Host ""

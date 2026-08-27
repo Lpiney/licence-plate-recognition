@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     使用 aria2 断点续传 + 多线程下载文件（解决翻墙下载不稳定问题）。
 
@@ -7,17 +7,17 @@
       - 断点续传：下到一半断了，重新运行本脚本会接着下
       - 16 线程分块下载
       - 无限自动重试
-      - 默认走 Clash 代理 127.0.0.1:7897（可用 -Proxy 参数覆盖）
+      - 默认无代理；如需经过代理请用 -Proxy 参数指定（如 http://<代理地址>:<端口>）
 
 .EXAMPLE
-    # 基本用法（下载到 datasets 目录）
+    # 基本用法（下载到项目 datasets 目录）
     .\download.ps1 -Url "https://github.com/xxx/yyy/archive/refs/heads/main.zip"
 
     # 走 GitHub 国内加速镜像（不用代理，国内直连）
     .\download.ps1 -Url "https://github.com/xxx/yyy/archive/refs/heads/main.zip" -Mirror
 
-    # 指定保存目录
-    .\download.ps1 -Url "https://..." -OutDir "D:\datasets"
+    # 指定保存目录与代理
+    .\download.ps1 -Url "https://..." -OutDir "D:\datasets" -Proxy "http://<代理地址>:<端口>"
 
     # 不用代理直连
     .\download.ps1 -Url "https://..." -Proxy $null
@@ -26,21 +26,24 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$Url,
 
-    [string]$Proxy = "http://127.0.0.1:7897",
+    [string]$Proxy = "",
 
-    [string]$OutDir = "D:\Github\licence-plate-recognition\datasets",
+    [string]$OutDir = "",
 
     [switch]$Mirror
 )
 
 $ErrorActionPreference = "Stop"
 
+# 未指定输出目录时, 默认存到脚本所在项目目录的 datasets 下 (无硬编码路径)
+if (-not $OutDir) { $OutDir = Join-Path $PSScriptRoot "datasets" }
+
 # 定位 aria2（优先系统 PATH，其次项目内置便携版）
 $aria2 = $null
 if (Get-Command aria2c -ErrorAction SilentlyContinue) {
     $aria2 = "aria2c"
 } else {
-    $portable = Get-ChildItem -Path "D:\Github\licence-plate-recognition\tools\aria2" -Recurse -Filter aria2c.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+    $portable = Get-ChildItem -Path (Join-Path $PSScriptRoot "tools\aria2") -Recurse -Filter aria2c.exe -ErrorAction SilentlyContinue | Select-Object -First 1
     if ($portable) { $aria2 = $portable.FullName }
 }
 if (-not $aria2) {

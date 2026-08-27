@@ -127,22 +127,22 @@
 
 ### 一键训练（推荐：自动清理残留 + 启动）
 ```powershell
-powershell -ExecutionPolicy Bypass -File D:\Github\licence-plate-recognition\start_train.ps1
+powershell -ExecutionPolicy Bypass -File <项目根目录>\start_train.ps1
 ```
 
 ### 快速诊断（推荐：先跑这个）
 ```powershell
 # 已激活 lpr 环境时:
-cd D:\Github\licence-plate-recognition
+cd <项目根目录>
 python diag.py
 # 未激活时:
-C:\Users\Bruce\miniconda3\Library\bin\conda.BAT run --no-capture-output -n lpr python D:\Github\licence-plate-recognition\diag.py
+<conda路径>\Library\bin\conda.BAT run --no-capture-output -n lpr python <项目根目录>\diag.py
 ```
 > 检查项：PyTorch 版本 / CUDA 可用性 / 显卡名 / 显存 / GPU 运算测试 / 模型加载
 
 ### 修复 conda 激活（可选，一劳永逸）
 ```powershell
-C:\Users\Bruce\miniconda3\Scripts\conda.exe init powershell
+<conda路径>\Scripts\conda.exe init powershell
 # 然后关闭终端重开，即可使用 conda activate lpr
 ```
 

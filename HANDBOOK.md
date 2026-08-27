@@ -60,7 +60,7 @@
 ## 3. 目录结构
 
 ```
-D:\Github\licence-plate-recognition\
+<项目根目录>\
 ├── README.MD              # 项目说明（参考来源）
 ├── PROGRESS.md            # 进度记录（AI 助手维护）
 ├── HANDBOOK.md            # 本手册
@@ -105,7 +105,7 @@ python -c "import ultralytics, cv2; print(ultralytics.__version__, cv2.__version
 
 **💡 conda 激活的正确姿势**（重要）：
 - ❌ 错误：`C:\...\conda.BAT activate lpr` —— 在 PowerShell 里**无效**（.BAT 在子进程运行，环境不传回）
-- ✅ 正确：先执行一次 `C:\Users\Bruce\miniconda3\Scripts\conda.exe init powershell`，**关掉终端重开**，之后就能直接 `conda activate lpr`（提示符从 `(base)` 变成 `(lpr)`）
+- ✅ 正确：先执行一次 `<conda路径>\Scripts\conda.exe init powershell`，**关掉终端重开**，之后就能直接 `conda activate lpr`（提示符从 `(base)` 变成 `(lpr)`）
 - ✅ 或者不激活，用 `conda run -n lpr python xxx.py`
 
 ---
@@ -150,10 +150,10 @@ names: ['plate'] # 类别名: 车牌
 
 ```powershell
 # 已激活 lpr 环境时（推荐）:
-python D:\Github\licence-plate-recognition\train.py
+python <项目根目录>\train.py
 
 # 未激活时:
-C:\Users\Bruce\miniconda3\Library\bin\conda.BAT run --no-capture-output -n lpr python D:\Github\licence-plate-recognition\train.py
+<conda路径>\Library\bin\conda.BAT run --no-capture-output -n lpr python <项目根目录>\train.py
 ```
 
 > 脚本已内置路径自动定位（基于 `__file__`），**从任何目录运行都能找到数据**。
@@ -201,10 +201,10 @@ yolo detect train resume=True
    python -m pip install tensorboard
    ```
 2. **开两个终端**：
-   - 终端 1：跑训练 `python D:\Github\licence-plate-recognition\train.py`
+   - 终端 1：跑训练 `python <项目根目录>\train.py`
    - 终端 2：启动 TensorBoard：
      ```powershell
-     tensorboard --logdir D:\Github\licence-plate-recognition\runs
+     tensorboard --logdir <项目根目录>\runs
      ```
 3. **浏览器打开**：`http://localhost:6006`
 
@@ -365,11 +365,11 @@ model.predict(source=0, conf=0.25, show=True)
 | 用途 | 命令 |
 |---|---|
 | 激活环境 | `conda activate lpr` |
-| 环境诊断 | `python D:\Github\licence-plate-recognition\diag.py` |
-| 训练（激活后） | `python D:\Github\licence-plate-recognition\train.py` |
-| 训练（免激活） | `C:\Users\Bruce\miniconda3\Library\bin\conda.BAT run --no-capture-output -n lpr python D:\Github\licence-plate-recognition\train.py` |
-| 初始化 conda 到 PowerShell | `C:\Users\Bruce\miniconda3\Scripts\conda.exe init powershell`（需重启终端） |
-| 查看训练结果 | `dir D:\Github\licence-plate-recognition\runs\plate` |
+| 环境诊断 | `python <项目根目录>\diag.py` |
+| 训练（激活后） | `python <项目根目录>\train.py` |
+| 训练（免激活） | `<conda路径>\Library\bin\conda.BAT run --no-capture-output -n lpr python <项目根目录>\train.py` |
+| 初始化 conda 到 PowerShell | `<conda路径>\Scripts\conda.exe init powershell`（需重启终端） |
+| 查看训练结果 | `dir <项目根目录>\runs\plate` |
 | 查看 GPU 状态 | `nvidia-smi` |
 
 ---
